@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="A local-first research planner for social law, AI governance, and reproducible legal AI experiments."
+    />
+    <meta name="theme-color" content="#183d3b" />
+    <title>03 · Research Roadmap | Law × AI</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23183d3b'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-size='38' fill='%23fffef8'%3E3%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a
+      class="skip-link"
+      href="#main"
+      data-en="Skip to content"
+      data-zh="跳到正文"
+      >Skip to content</a
+    >
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="https://josephsun1854.github.io/JosephSun1854/"
+          ><span class="brand-mark">L</span>LAW × AI</a
+        >
+        <nav class="suite-nav" aria-label="Research tools">
+          <a href="https://josephsun1854.github.io/01-citation-audit/"
+            >01 · Citations</a
+          ><a href="https://josephsun1854.github.io/02-evidence-atlas/"
+            >02 · Evidence</a
+          ><a
+            href="https://josephsun1854.github.io/03-research-roadmap/"
+            aria-current="page"
+            >03 · Roadmap</a
+          ><a href="https://josephsun1854.github.io/04-literature-library/"
+            >04 · Library</a
+          ><button id="language" type="button" aria-label="Switch language">
+            中文
+          </button>
+        </nav>
+      </div>
+    </header>
+    <main id="main" class="app-shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">03 / RESEARCH ROADMAP</p>
+          <h1
+            data-en="A question. A plan. An artifact."
+            data-zh="从研究问题，到可见成果。"
+          >
+            A question. A plan. An artifact.
+          </h1>
+          <p
+            data-en="Turn a legal research question into reading, analysis, experiments, and writing—with clear dependencies and a realistic workload forecast."
+            data-zh="将法学研究问题拆成阅读、分析、实验与写作任务，用依赖关系和工作量预测安排进度。"
+          >
+            Turn a legal research question into reading, analysis, experiments,
+            and writing—with clear dependencies and a realistic workload
+            forecast.
+          </p>
+        </div>
+        <div class="hero-actions">
+          <span
+            class="tag"
+            data-en="Local-first · No account"
+            data-zh="本地保存 · 无需账号"
+            >Local-first · No account</span
+          ><button
+            class="primary"
+            id="add-task"
+            data-en="+ New task"
+            data-zh="+ 新建任务"
+          >
+            + New task
+          </button>
+        </div>
+      </section>
+      <section
+        id="recovery-warning"
+        class="panel recovery-warning"
+        role="alert"
+        hidden
+      >
+        <h2
+          data-en="Your stored data needs recovery"
+          data-zh="已有数据需要恢复"
+        >
+          Your stored data needs recovery
+        </h2>
+        <p
+          data-en="The existing JSON cannot be read by this version. It has been preserved. Export its original bytes before explicitly restoring a valid backup or clearing the workspace. New edits and examples cannot overwrite it."
+          data-zh="当前版本无法读取已有 JSON，原始内容已保留。请先导出原始数据，再明确恢复有效备份或清空工作区；新编辑与示例不会覆盖它。"
+        >
+          The existing JSON cannot be read by this version. It has been
+          preserved. Export its original bytes before explicitly restoring a
+          valid backup or clearing the workspace. New edits and examples cannot
+          overwrite it.
+        </p>
+        <button
+          id="export-recovery"
+          data-en="Export original JSON"
+          data-zh="导出原始 JSON"
+        >
+          Export original JSON
+        </button>
+      </section>
+      <div class="stats" id="stats" aria-live="polite"></div>
+      <div class="layout">
+        <aside>
+          <section class="panel">
+            <div class="section-head">
+              <h2 data-en="Your capacity" data-zh="可投入时间">
+                Your capacity
+              </h2>
+            </div>
+            <form id="settings-form">
+              <div class="field">
+                <label
+                  for="start-date"
+                  data-en="Plan starts"
+                  data-zh="计划起始日期"
+                  >Plan starts</label
+                ><input id="start-date" type="date" required />
+              </div>
+              <div class="field">
+                <label
+                  for="daily-hours"
+                  data-en="Hours per working day"
+                  data-zh="每日研究小时数"
+                  >Hours per working day</label
+                ><input
+                  id="daily-hours"
+                  type="number"
+                  min="0.25"
+                  max="24"
+                  step="0.25"
+                  required
+                />
+              </div>
+              <fieldset class="work-days">
+                <legend data-en="Working days" data-zh="研究日">
+                  Working days
+                </legend>
+                <div id="weekdays"></div>
+              </fieldset>
+              <button
+                type="submit"
+                data-en="Update forecast"
+                data-zh="更新预测"
+              >
+                Update forecast
+              </button>
+            </form>
+            <p
+              class="note"
+              data-en="The forecast respects task dependencies and daily capacity. It is a planning aid; estimates and completed work remain your judgment."
+              data-zh="预测考虑任务依赖与每日容量，辅助安排进度。预计工作量与完成状态仍由你判断。"
+            >
+              The forecast respects task dependencies and daily capacity. It is
+              a planning aid; estimates and completed work remain your judgment.
+            </p>
+          </section>
+          <section class="panel">
+            <h3 data-en="Start with a structure" data-zh="从示例结构开始">
+              Start with a structure
+            </h3>
+            <p
+              class="note"
+              data-en="An editable 12-week example on employment and AI governance. No factual findings or legal advice are prefilled."
+              data-zh="就业与 AI 治理的可编辑 12 周示例，不预填研究结论或法律意见。"
+            >
+              An editable 12-week example on employment and AI governance. No
+              factual findings or legal advice are prefilled.
+            </p>
+            <button
+              id="load-template"
+              data-en="Load example plan"
+              data-zh="载入示例计划"
+            >
+              Load example plan
+            </button>
+          </section>
+          <section class="panel">
+            <h3 data-en="Keep your work portable" data-zh="随时带走研究记录">
+              Keep your work portable
+            </h3>
+            <div class="export-grid">
+              <button id="export-json">JSON</button
+              ><button id="export-markdown">Markdown</button
+              ><button id="export-csv">CSV</button
+              ><button id="export-calendar">Calendar .ics</button>
+            </div>
+            <hr />
+            <button
+              id="import-button"
+              data-en="Import backup / reading list"
+              data-zh="导入备份 / 文献阅读清单"
+            >
+              Import backup / reading list</button
+            ><input
+              id="import-file"
+              type="file"
+              accept=".json,application/json"
+              hidden
+            />
+            <p
+              class="note"
+              data-en="A Library reading list adds reading tasks. A Roadmap backup replaces this workspace after confirmation."
+              data-zh="文献库阅读清单将新增阅读任务；路线图备份经确认后替换当前工作区。"
+            >
+              A Library reading list adds reading tasks. A Roadmap backup
+              replaces this workspace after confirmation.
+            </p>
+            <button
+              id="clear-workspace"
+              class="danger"
+              data-en="Clear workspace"
+              data-zh="清空工作区"
+            >
+              Clear workspace
+            </button>
+          </section>
+        </aside>
+        <section class="workspace">
+          <nav class="view-tabs" aria-label="Workspace views" id="view-tabs">
+            <button
+              data-view="tasks"
+              aria-pressed="true"
+              data-en="Tasks"
+              data-zh="任务"
+            >
+              Tasks</button
+            ><button
+              data-view="forecast"
+              aria-pressed="false"
+              data-en="Forecast"
+              data-zh="进度预测"
+            >
+              Forecast</button
+            ><button
+              data-view="questions"
+              aria-pressed="false"
+              data-en="Questions"
+              data-zh="研究问题"
+            >
+              Questions</button
+            ><button
+              data-view="experiments"
+              aria-pressed="false"
+              data-en="Experiments"
+              data-zh="实验记录"
+            >
+              Experiments</button
+            ><button
+              data-view="reviews"
+              aria-pressed="false"
+              data-en="Reflections"
+              data-zh="周回顾"
+            >
+              Reflections
+            </button>
+          </nav>
+          <div id="tasks-view">
+            <div class="task-filters">
+              <label
+                class="sr-only"
+                for="search"
+                data-en="Search tasks"
+                data-zh="搜索任务"
+                >Search tasks</label
+              ><input
+                id="search"
+                type="search"
+                placeholder="Search tasks / 搜索任务"
+              /><label class="sr-only" for="status-filter">Status</label
+              ><select id="status-filter">
+                <option value="">All statuses / 全部状态</option>
+                <option value="todo">To do / 待开始</option>
+                <option value="doing">In progress / 进行中</option>
+                <option value="done">Done / 已完成</option></select
+              ><label class="sr-only" for="type-filter">Type</label
+              ><select id="type-filter">
+                <option value="">All types / 全部类型</option>
+                <option value="reading">Reading / 阅读</option>
+                <option value="analysis">Analysis / 分析</option>
+                <option value="experiment">Experiment / 实验</option>
+                <option value="writing">Writing / 写作</option>
+                <option value="application">Application / 申请</option>
+              </select>
+            </div>
+            <div id="task-list"></div>
+          </div>
+          <div id="forecast-view" hidden>
+            <div class="panel">
+              <div class="section-head">
+                <h2 data-en="Capacity-aware forecast" data-zh="按容量预测进度">
+                  Capacity-aware forecast
+                </h2>
+                <span
+                  class="badge"
+                  data-en="Deterministic forecast"
+                  data-zh="规则预测"
+                  >Deterministic forecast</span
+                >
+              </div>
+              <p
+                class="note"
+                data-en="Ready tasks are ordered by deadline; their remaining estimated hours occupy working days. Dependencies finish before their successors. This heuristic does not optimize every possible schedule."
+                data-zh="可安排任务按截止日期排序，将剩余估计工时分配至研究日；前置任务先于后续任务完成。此规则不保证得到最优排期。"
+              >
+                Ready tasks are ordered by deadline; their remaining estimated
+                hours occupy working days. Dependencies finish before their
+                successors. This heuristic does not optimize every possible
+                schedule.
+              </p>
+              <div id="forecast-list"></div>
+            </div>
+          </div>
+          <div id="questions-view" hidden>
+            <div class="section-head">
+              <h2 data-en="Research questions" data-zh="研究问题">
+                Research questions
+              </h2>
+              <button
+                id="add-question"
+                data-en="+ Question"
+                data-zh="+ 研究问题"
+              >
+                + Question
+              </button>
+            </div>
+            <div id="question-list"></div>
+          </div>
+          <div id="experiments-view" hidden>
+            <div class="section-head">
+              <h2
+                data-en="Make the method reproducible"
+                data-zh="让研究方法可复现"
+              >
+                Make the method reproducible
+              </h2>
+              <button
+                id="add-experiment"
+                data-en="+ Experiment"
+                data-zh="+ 实验记录"
+              >
+                + Experiment
+              </button>
+            </div>
+            <p
+              class="note"
+              data-en="Record model or method, dataset version, baseline, evaluation metrics, observations, and an artifact. This tool records experiments; it does not run a model."
+              data-zh="记录模型或方法、数据集版本、基线、评价指标、观察结果与成果链接。本工具记录实验，不调用模型。"
+            >
+              Record model or method, dataset version, baseline, evaluation
+              metrics, observations, and an artifact. This tool records
+              experiments; it does not run a model.
+            </p>
+            <div id="experiment-list"></div>
+          </div>
+          <div id="reviews-view" hidden>
+            <div class="section-head">
+              <h2 data-en="A weekly research habit" data-zh="每周回顾研究进展">
+                A weekly research habit
+              </h2>
+              <button id="add-review" data-en="+ Reflection" data-zh="+ 周回顾">
+                + Reflection
+              </button>
+            </div>
+            <div id="review-list"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+    <footer class="footer">
+      <span
+        data-en="Data stays in this browser. Export a backup before clearing site data."
+        data-zh="数据保存在当前浏览器；清理网站数据前请导出备份。"
+        >Data stays in this browser. Export a backup before clearing site
+        data.</span
+      ><a
+        href="https://github.com/JosephSun1854/03-research-roadmap"
+        data-en="Method & source ↗"
+        data-zh="方法说明与源码 ↗"
+        >Method & source ↗</a
+      >
+    </footer>
+    <dialog id="editor" aria-labelledby="editor-title">
+      <form id="editor-form">
+        <div class="dialog-head">
+          <h2 id="editor-title"></h2>
+          <button type="button" id="close-editor" aria-label="Close / 关闭">
+            ×
+          </button>
+        </div>
+        <div id="editor-fields"></div>
+        <div class="actions">
+          <button class="primary" type="submit" data-en="Save" data-zh="保存">
+            Save</button
+          ><button
+            type="button"
+            id="cancel-editor"
+            data-en="Cancel"
+            data-zh="取消"
+          >
+            Cancel
+          </button>
+        </div>
+        <p id="editor-error" role="alert" class="error-text"></p>
+      </form>
+    </dialog>
+    <div id="toast" class="status-bar" role="status" hidden></div>
+    <noscript
+      ><p>
+        This research tool requires JavaScript. 本工具需要启用 JavaScript。
+      </p></noscript
+    >
+    <script type="module" src="app.mjs"></script>
+  </body>
+</html>
