@@ -388,6 +388,9 @@ export function importReadingList(state, input) {
     const source = url(p.sourceUrl || "");
     const doi = text(p.doi || "", "DOI", 500);
     const abstract = text(p.abstract || "", "abstract", 20000);
+    for (const flag of ["verified", "synthetic"])
+      if (p[flag] !== undefined && typeof p[flag] !== "boolean")
+        throw new Error(`Invalid paper ${flag} flag`);
     copy.tasks.push({
       id: uid(),
       title: `Read / 阅读：${title}`,
@@ -404,6 +407,12 @@ export function importReadingList(state, input) {
           ? `https://doi.org/${encodeURIComponent(doi)}`
           : ""),
       notes: [
+        p.synthetic
+          ? "SYNTHETIC EDUCATIONAL RECORD / 合成教学记录，不是已发表论文。"
+          : "",
+        p.verified
+          ? "Metadata confirmation recorded by the user / 用户记录已核对元数据；不代表结论已经核验。"
+          : "Metadata not confirmed / 元数据尚未确认，请核对原文。",
         authors.join("; "),
         p.year ? String(p.year) : "",
         text(p.journal || "", "journal", 1000),

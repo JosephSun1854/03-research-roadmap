@@ -267,3 +267,16 @@ test("unsupported extreme years are rejected before scheduling or calendar expor
   s.tasks = [task("a", { deadline: "9999-12-31" })];
   assert.throws(() => validateState(s), /date/);
 });
+test("reading-list transfer preserves synthetic and metadata-review warnings", () => {
+  const s = state();
+  const input = {
+    format: "law-ai-reading-list",
+    version: 1,
+    papers: [{ title: "A teaching record", synthetic: true, verified: false }],
+  };
+  const imported = importReadingList(s, input);
+  assert.ok(imported.tasks[0].notes.includes("SYNTHETIC EDUCATIONAL RECORD"));
+  assert.ok(imported.tasks[0].notes.includes("Metadata not confirmed"));
+  input.papers[0].verified = "true";
+  assert.throws(() => importReadingList(s, input), /flag/);
+});
